@@ -1,26 +1,19 @@
 import axios from "axios";
 
 const API_BASE_URL =
-  //   process.env.REACT_APP_API_URL ||
-  "http://localhost:3000/api"; // <-- Set to 3000
+  import.meta.env.VITE_API_URL || "https://royal-fox-backend.onrender.com/api";
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
-  // --- MODIFICATION ---
-  // REMOVED 'Content-Type': 'application/json'
-  // When sending FormData, the browser MUST set this header automatically.
+  // Browser automatically sets Content-Type for FormData
 });
 
-// --- MODIFICATION ---
-// This function now receives a FormData object, not a plain JS object.
+// Submit application with FormData
 export const submitApplication = async (formDataObject) => {
   try {
-    // We send the formDataObject directly.
     const response = await apiClient.post("/applications", formDataObject);
-    return response.data; // Return the JSON response from the server
+    return response.data;
   } catch (error) {
-    // Pass the detailed error from the server back to the component
-    // This is what the new catch block in App.jsx will receive
     throw error.response ? error.response.data : error;
   }
 };
