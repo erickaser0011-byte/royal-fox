@@ -3,7 +3,7 @@ import { Upload } from "lucide-react";
 
 export const FileUploadZone = ({
   label,
-  fileName,
+  fileName, // <-- This is now a File object or null
   isDragging,
   onDragEnter,
   onDragLeave,
@@ -34,8 +34,9 @@ export const FileUploadZone = ({
       />
       <label htmlFor={inputId} className="cursor-pointer block">
         <Upload className="w-8 md:w-10 h-8 md:h-10 text-gray-400 mx-auto mb-2 md:mb-3" />
+        {/* --- MODIFICATION: Check if fileName is a File object before accessing .name --- */}
         <p className="text-gray-900 font-medium text-sm md:text-base">
-          {fileName ? fileName : label}
+          {fileName && fileName.name ? fileName.name : label}
         </p>
         <p className="text-gray-500 text-xs md:text-sm mt-1">
           Drag & Drop or Browse
@@ -44,6 +45,3 @@ export const FileUploadZone = ({
     </div>
   );
 };
-
-
-

