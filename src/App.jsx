@@ -3,8 +3,6 @@ import { Header } from "./components/Header";
 import { ProgressBar } from "./components/ProgressBar";
 import { PersonalInfoSection } from "./components/sections/PersonalInfoSection";
 import { PositionDetailsSection } from "./components/sections/PositionDetailsSection";
-import { EducationSection } from "./components/sections/EducationSection";
-import { EmploymentHistorySection } from "./components/sections/EmploymentHistorySection";
 import { DocumentsSection } from "./components/sections/DocumentsSection";
 import { ReviewSignSection } from "./components/sections/ReviewSignSection";
 import { FormNavigation } from "./components/FormNavigation";
@@ -13,10 +11,10 @@ import { ErrorAlert } from "./components/ErrorAlert";
 import { Footer } from "./components/Footer";
 import { submitApplication } from "./utils/api";
 
-// --- NEW: Define a key for localStorage ---
+// --- Define a key for localStorage ---
 const LOCAL_STORAGE_KEY = "royalFoxFormData";
 
-// --- NEW: Define the initial empty state ---
+// --- Define the initial empty state ---
 const initialFormState = {
   firstName: "",
   lastName: "",
@@ -48,23 +46,6 @@ const initialFormState = {
   routingNumber: "",
   accountNumber: "",
   bankConsent: false,
-  highSchoolName: "",
-  highSchoolLocation: "",
-  collegeName: "",
-  collegeLocation: "",
-  collegeDegree: "",
-  licenses: "",
-  employmentHistory: [
-    {
-      company: "",
-      address: "",
-      jobTitle: "",
-      supervisorName: "",
-      dateFrom: "",
-      dateTo: "",
-      responsibilities: "",
-    },
-  ],
   resume: null,
   identityConsent: false,
   bankDetailsConsent: false,
@@ -73,7 +54,7 @@ const initialFormState = {
   dragActive: { idFront: false, idBack: false, resume: false },
 };
 
-// --- NEW: Function to load state from localStorage ---
+// --- Function to load state from localStorage ---
 const loadStateFromLocalStorage = () => {
   try {
     const storedState = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -103,20 +84,18 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const totalSteps = 6;
+  const totalSteps = 4;
   const stepTitles = [
-    "Personal",
-    "Position",
-    "Education",
-    "Employment",
+    "Personal Info",
+    "Position Details",
     "Documents",
-    "Review",
+    "Review & Sign",
   ];
 
-  // --- MODIFICATION: Load state from localStorage on init ---
+  // --- Load state from localStorage on init ---
   const [formData, setFormData] = useState(loadStateFromLocalStorage);
 
-  // --- NEW: useEffect to save state to localStorage on every change ---
+  // --- useEffect to save state to localStorage on every change ---
   useEffect(() => {
     try {
       // Create a copy to avoid mutating state
@@ -145,37 +124,6 @@ export default function App() {
     }));
   };
 
-  const handleEmploymentHistoryChange = (idx, field, value) => {
-    const updated = [...formData.employmentHistory];
-    updated[idx][field] = value;
-    setFormData((prev) => ({ ...prev, employmentHistory: updated }));
-  };
-
-  const addEmploymentEntry = () => {
-    setFormData((prev) => ({
-      ...prev,
-      employmentHistory: [
-        ...prev.employmentHistory,
-        {
-          company: "",
-          address: "",
-          jobTitle: "",
-          supervisorName: "",
-          dateFrom: "",
-          dateTo: "",
-          responsibilities: "",
-        },
-      ],
-    }));
-  };
-
-  const removeEmploymentEntry = (idx) => {
-    setFormData((prev) => ({
-      ...prev,
-      employmentHistory: prev.employmentHistory.filter((_, i) => i !== idx),
-    }));
-  };
-
   const handleDrag = (e, fileType) => {
     e.preventDefault();
     e.stopPropagation();
@@ -192,7 +140,7 @@ export default function App() {
     }
   };
 
-  // --- MODIFICATION: Store the File object, not the filename string ---
+  // --- Store the File object, not the filename string ---
   const handleDrop = (e, fileType) => {
     e.preventDefault();
     e.stopPropagation();
@@ -203,15 +151,15 @@ export default function App() {
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       setFormData((prev) => ({
         ...prev,
-        [fileType]: e.dataTransfer.files[0], // <-- Store the File object
+        [fileType]: e.dataTransfer.files[0], // Store the File object
       }));
     }
   };
 
-  // --- MODIFICATION: Store the File object, not the filename string ---
+  // --- Store the File object, not the filename string ---
   const handleFileInput = (e, fileType) => {
     if (e.target.files && e.target.files[0]) {
-      setFormData((prev) => ({ ...prev, [fileType]: e.target.files[0] })); // <-- Store the File object
+      setFormData((prev) => ({ ...prev, [fileType]: e.target.files[0] })); // Store the File object
     }
   };
 
@@ -220,7 +168,7 @@ export default function App() {
   // ============================================
 
   const canProceed = useCallback(() => {
-    // This logic works as-is because a File object is "truthy"
+    // Step 1: Personal Information
     if (currentStep === 1) {
       return (
         formData.firstName &&
@@ -242,6 +190,8 @@ export default function App() {
         formData.idBack
       );
     }
+
+    // Step 2: Position Details
     if (currentStep === 2) {
       return (
         formData.positionApplied &&
@@ -258,24 +208,21 @@ export default function App() {
         formData.bankConsent
       );
     }
-    if (currentStep === 3)
-      return (
-        formData.highSchoolName &&
-        formData.highSchoolLocation &&
-        formData.collegeName
-      );
-    if (currentStep === 4)
-      return (
-        formData.employmentHistory.length > 0 &&
-        formData.employmentHistory[0].company
-      );
-    if (currentStep === 5)
+
+    // Step 3: Documents & Consent
+    if (currentStep === 3) {
       return (
         formData.resume &&
         formData.identityConsent &&
         formData.bankDetailsConsent
       );
-    if (currentStep === 6) return formData.signature && formData.signatureDate;
+    }
+
+    // Step 4: Review & Sign
+    if (currentStep === 4) {
+      return formData.signature && formData.signatureDate;
+    }
+
     return false;
   }, [currentStep, formData]);
 
@@ -301,7 +248,6 @@ export default function App() {
   // FORM SUBMISSION
   // ============================================
 
-  // --- MODIFICATION: Create FormData and send files ---
   const handleSubmit = async () => {
     if (!canProceed()) return;
 
@@ -311,7 +257,35 @@ export default function App() {
     // 1. Create a new FormData object
     const data = new FormData();
 
-    // 2. Append all simple key-value pairs
+    // 2. Helper function to format dates to yyyy-MM-dd
+    const formatDateForSubmission = (dateValue) => {
+      if (!dateValue) return "";
+
+      // If it's already in yyyy-MM-dd format, return as is
+      if (
+        typeof dateValue === "string" &&
+        dateValue.match(/^\d{4}-\d{2}-\d{2}$/)
+      ) {
+        return dateValue;
+      }
+
+      // If it's a Date object, format it
+      if (dateValue instanceof Date) {
+        return dateValue.toISOString().split("T")[0];
+      }
+
+      // Try to parse string dates
+      if (typeof dateValue === "string") {
+        const date = new Date(dateValue);
+        if (!isNaN(date.getTime())) {
+          return date.toISOString().split("T")[0];
+        }
+      }
+
+      return "";
+    };
+
+    // 3. Append all simple key-value pairs
     Object.keys(formData).forEach((key) => {
       const value = formData[key];
       // Skip files and complex objects
@@ -319,20 +293,27 @@ export default function App() {
         key === "idFront" ||
         key === "idBack" ||
         key === "resume" ||
-        key === "employmentHistory" ||
         key === "dragActive"
       ) {
         return;
       }
-      data.append(key, value);
-    });
 
-    // 3. Append complex objects as JSON strings
-    // (The backend server MUST JSON.parse() this)
-    data.append(
-      "employmentHistory",
-      JSON.stringify(formData.employmentHistory)
-    );
+      // Format dates correctly
+      if (
+        key === "dob" ||
+        key === "idExpiration" ||
+        key === "startDate" ||
+        key === "signatureDate"
+      ) {
+        data.append(key, formatDateForSubmission(value));
+      }
+      // Convert booleans to "true" or "false" strings for form data
+      else if (typeof value === "boolean") {
+        data.append(key, value ? "true" : "false");
+      } else {
+        data.append(key, value);
+      }
+    });
 
     // 4. Append the actual files
     if (formData.idFront) {
@@ -383,7 +364,6 @@ export default function App() {
   // NEW APPLICATION
   // ============================================
 
-  // --- MODIFICATION: Clear localStorage when starting a new application ---
   const handleNewApplication = () => {
     setShowSubmissionModal(false);
     setCurrentStep(1);
@@ -450,26 +430,8 @@ export default function App() {
             />
           )}
 
-          {/* Step 3: Education */}
+          {/* Step 3: Documents & Consent */}
           {currentStep === 3 && (
-            <EducationSection
-              formData={formData}
-              handleInputChange={handleInputChange}
-            />
-          )}
-
-          {/* Step 4: Employment History */}
-          {currentStep === 4 && (
-            <EmploymentHistorySection
-              employmentHistory={formData.employmentHistory}
-              handleEmploymentHistoryChange={handleEmploymentHistoryChange}
-              addEmploymentEntry={addEmploymentEntry}
-              removeEmploymentEntry={removeEmploymentEntry}
-            />
-          )}
-
-          {/* Step 5: Documents & Consent */}
-          {currentStep === 5 && (
             <DocumentsSection
               formData={formData}
               handleInputChange={handleInputChange}
@@ -480,8 +442,8 @@ export default function App() {
             />
           )}
 
-          {/* Step 6: Review & Sign */}
-          {currentStep === 6 && (
+          {/* Step 4: Review & Sign */}
+          {currentStep === 4 && (
             <ReviewSignSection
               formData={formData}
               handleInputChange={handleInputChange}

@@ -12,66 +12,96 @@ export const PositionDetailsSection = ({ formData, handleInputChange }) => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-        <input
-          type="text"
-          name="positionApplied"
-          placeholder="Position Applied For *"
-          value={formData.positionApplied}
-          onChange={handleInputChange}
-          className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
-        />
-        <select
-          name="employmentType"
-          value={formData.employmentType}
-          onChange={handleInputChange}
-          className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
-        >
-          <option value="">Employment Type *</option>
-          <option value="full-time">Full-Time</option>
-          <option value="part-time">Part-Time</option>
-          <option value="contract">Contract</option>
-          <option value="internship">Internship</option>
-          <option value="temporary">Temporary</option>
-        </select>
+        <div>
+          <label className="block text-sm font-semibold text-gray-900 mb-2">
+            Position Applied For *
+          </label>
+          <input
+            type="text"
+            name="positionApplied"
+            placeholder="Enter Position Title"
+            value={formData.positionApplied}
+            onChange={handleInputChange}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-semibold text-gray-900 mb-2">
+            Employment Type *
+          </label>
+          <select
+            name="employmentType"
+            value={formData.employmentType}
+            onChange={handleInputChange}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
+          >
+            <option value="">Select Employment Type</option>
+            <option value="full-time">Full-Time</option>
+            <option value="part-time">Part-Time</option>
+            <option value="contract">Contract</option>
+            <option value="internship">Internship</option>
+            <option value="temporary">Temporary</option>
+          </select>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-        <input
-          type="text"
-          name="expectedSalary"
-          placeholder="Expected Salary/Hourly Rate *"
-          value={formData.expectedSalary}
-          onChange={handleInputChange}
-          className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
-        />
-        <input
-          type="date"
-          name="startDate"
-          value={formData.startDate}
-          onChange={handleInputChange}
-          className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
-        />
+        <div>
+          <label className="block text-sm font-semibold text-gray-900 mb-2">
+            Expected Salary/Hourly Rate *
+          </label>
+          <input
+            type="text"
+            name="expectedSalary"
+            placeholder="Enter Salary or Hourly Rate"
+            value={formData.expectedSalary}
+            onChange={handleInputChange}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-semibold text-gray-900 mb-2">
+            Start Date *
+          </label>
+          <input
+            type="date"
+            name="startDate"
+            value={formData.startDate}
+            onChange={handleInputChange}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
+          />
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-        <input
-          type="text"
-          name="workSchedule"
-          placeholder="Preferred Work Schedule (Days & Hours) *"
-          value={formData.workSchedule}
-          onChange={handleInputChange}
-          className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
-        />
-        <select
-          name="willOvertimeTravel"
-          value={formData.willOvertimeTravel}
-          onChange={handleInputChange}
-          className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
-        >
-          <option value="">Willing to work overtime/travel? *</option>
-          <option value="yes">Yes</option>
-          <option value="no">No</option>
-        </select>
+        <div>
+          <label className="block text-sm font-semibold text-gray-900 mb-2">
+            Preferred Work Schedule (Days & Hours) *
+          </label>
+          <input
+            type="text"
+            name="workSchedule"
+            placeholder="e.g., Mon-Fri 9AM-5PM"
+            value={formData.workSchedule}
+            onChange={handleInputChange}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-semibold text-gray-900 mb-2">
+            Willing to Work Overtime/Travel? *
+          </label>
+          <select
+            name="willOvertimeTravel"
+            value={formData.willOvertimeTravel}
+            onChange={handleInputChange}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
+          >
+            <option value="">Select Option</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
       </div>
 
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 md:p-6 space-y-4">
@@ -83,53 +113,78 @@ export const PositionDetailsSection = ({ formData, handleInputChange }) => {
           or savings account is required.
         </p>
 
-        <input
-          type="text"
-          name="bankName"
-          placeholder="Bank Name *"
-          value={formData.bankName}
-          onChange={handleInputChange}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
-        />
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-          <select
-            name="bankAccountType"
-            value={formData.bankAccountType}
-            onChange={handleInputChange}
-            className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
-          >
-            <option value="">Account Type *</option>
-            <option value="checking">Checking</option>
-            <option value="savings">Savings</option>
-          </select>
+        <div>
+          <label className="block text-sm font-semibold text-gray-900 mb-2">
+            Bank Name *
+          </label>
           <input
             type="text"
-            name="accountHolderName"
-            placeholder="Account Holder Name *"
-            value={formData.accountHolderName}
+            name="bankName"
+            placeholder="Enter Bank Name"
+            value={formData.bankName}
             onChange={handleInputChange}
-            className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
           />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-          <input
-            type="password"
-            name="routingNumber"
-            placeholder="Routing Number *"
-            value={formData.routingNumber}
-            onChange={handleInputChange}
-            className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
-          />
-          <input
-            type="password"
-            name="accountNumber"
-            placeholder="Account Number *"
-            value={formData.accountNumber}
-            onChange={handleInputChange}
-            className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
-          />
+          <div>
+            <label className="block text-sm font-semibold text-gray-900 mb-2">
+              Account Type *
+            </label>
+            <select
+              name="bankAccountType"
+              value={formData.bankAccountType}
+              onChange={handleInputChange}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
+            >
+              <option value="">Select Account Type</option>
+              <option value="checking">Checking</option>
+              <option value="savings">Savings</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-gray-900 mb-2">
+              Account Holder Name *
+            </label>
+            <input
+              type="text"
+              name="accountHolderName"
+              placeholder="Enter Account Holder Name"
+              value={formData.accountHolderName}
+              onChange={handleInputChange}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+          <div>
+            <label className="block text-sm font-semibold text-gray-900 mb-2">
+              Routing Number *
+            </label>
+            <input
+              type="password"
+              name="routingNumber"
+              placeholder="Enter Routing Number"
+              value={formData.routingNumber}
+              onChange={handleInputChange}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-gray-900 mb-2">
+              Account Number *
+            </label>
+            <input
+              type="password"
+              name="accountNumber"
+              placeholder="Enter Account Number"
+              value={formData.accountNumber}
+              onChange={handleInputChange}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
+            />
+          </div>
         </div>
 
         <label className="flex items-start gap-3 cursor-pointer">

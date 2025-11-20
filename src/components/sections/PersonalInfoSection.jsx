@@ -1,5 +1,4 @@
 import React from "react";
-import { Upload } from "lucide-react";
 import { FileUploadZone } from "../FileUploadZone";
 
 export const PersonalInfoSection = ({
@@ -20,130 +19,195 @@ export const PersonalInfoSection = ({
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-        <input
-          type="text"
-          name="lastName"
-          placeholder="Last Name *"
-          value={formData.lastName}
-          onChange={handleInputChange}
-          className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
-        />
-        <input
-          type="text"
-          name="firstName"
-          placeholder="First Name *"
-          value={formData.firstName}
-          onChange={handleInputChange}
-          className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
-        />
-        <input
-          type="text"
-          name="middleName"
-          placeholder="Middle Name"
-          value={formData.middleName}
-          onChange={handleInputChange}
-          className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
-        />
+        <div>
+          <label className="block text-sm font-semibold text-gray-900 mb-2">
+            Last Name *
+          </label>
+          <input
+            type="text"
+            name="lastName"
+            placeholder="Enter Last Name"
+            value={formData.lastName}
+            onChange={handleInputChange}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-semibold text-gray-900 mb-2">
+            First Name *
+          </label>
+          <input
+            type="text"
+            name="firstName"
+            placeholder="Enter First Name"
+            value={formData.firstName}
+            onChange={handleInputChange}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-semibold text-gray-900 mb-2">
+            Middle Name
+          </label>
+          <input
+            type="text"
+            name="middleName"
+            placeholder="Enter Middle Name"
+            value={formData.middleName}
+            onChange={handleInputChange}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
+          />
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-        <input
-          type="date"
-          name="dob"
-          value={formData.dob}
-          onChange={handleInputChange}
-          className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
-        />
-        <select
-          name="preferredContact"
-          value={formData.preferredContact}
-          onChange={handleInputChange}
-          className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
-        >
-          <option value="">Preferred Contact Method *</option>
-          <option value="phone">Phone</option>
-          <option value="email">Email</option>
-        </select>
+        <div>
+          <label className="block text-sm font-semibold text-gray-900 mb-2">
+            Date of Birth (DOB) *
+          </label>
+          <input
+            type="date"
+            name="dob"
+            value={formData.dob}
+            onChange={handleInputChange}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-semibold text-gray-900 mb-2">
+            Preferred Contact Method *
+          </label>
+          <select
+            name="preferredContact"
+            value={formData.preferredContact}
+            onChange={handleInputChange}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
+          >
+            <option value="">Select Contact Method</option>
+            <option value="phone">Phone</option>
+            <option value="email">Email</option>
+          </select>
+        </div>
       </div>
 
       <div className="space-y-4">
         <p className="font-semibold text-gray-900 text-sm md:text-base">
           Current Address *
         </p>
-        <input
-          type="text"
-          name="street"
-          placeholder="Street Address"
-          value={formData.street}
-          onChange={handleInputChange}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
-        />
+        <div>
+          <label className="block text-sm font-semibold text-gray-900 mb-2">
+            Street Address *
+          </label>
+          <input
+            type="text"
+            name="street"
+            placeholder="Enter Street Address"
+            value={formData.street}
+            onChange={handleInputChange}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
+          />
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label className="block text-sm font-semibold text-gray-900 mb-2">
+              City *
+            </label>
+            <input
+              type="text"
+              name="city"
+              placeholder="Enter City"
+              value={formData.city}
+              onChange={handleInputChange}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-gray-900 mb-2">
+              State *
+            </label>
+            <input
+              type="text"
+              name="state"
+              placeholder="Enter State"
+              value={formData.state}
+              onChange={handleInputChange}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-gray-900 mb-2">
+              ZIP Code *
+            </label>
+            <input
+              type="text"
+              name="zipCode"
+              placeholder="Enter ZIP Code"
+              value={formData.zipCode}
+              onChange={handleInputChange}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+        <div>
+          <label className="block text-sm font-semibold text-gray-900 mb-2">
+            Phone Number *
+          </label>
           <input
-            type="text"
-            name="city"
-            placeholder="City"
-            value={formData.city}
+            type="tel"
+            name="phone"
+            placeholder="Enter Phone Number"
+            value={formData.phone}
             onChange={handleInputChange}
-            className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
           />
+        </div>
+        <div>
+          <label className="block text-sm font-semibold text-gray-900 mb-2">
+            Email Address *
+          </label>
           <input
-            type="text"
-            name="state"
-            placeholder="State"
-            value={formData.state}
+            type="email"
+            name="email"
+            placeholder="Enter Email Address"
+            value={formData.email}
             onChange={handleInputChange}
-            className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
-          />
-          <input
-            type="text"
-            name="zipCode"
-            placeholder="ZIP Code"
-            value={formData.zipCode}
-            onChange={handleInputChange}
-            className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
           />
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-        <input
-          type="tel"
-          name="phone"
-          placeholder="Phone Number *"
-          value={formData.phone}
-          onChange={handleInputChange}
-          className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email Address *"
-          value={formData.email}
-          onChange={handleInputChange}
-          className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
-        />
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-        <select
-          name="workAuthorized"
-          value={formData.workAuthorized}
-          onChange={handleInputChange}
-          className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
-        >
-          <option value="">Legally authorized to work in US? *</option>
-          <option value="yes">Yes</option>
-          <option value="no">No</option>
-        </select>
-        <input
-          type="password"
-          name="ssn"
-          placeholder="Full SSN (XXX-XX-XXXX) *"
-          value={formData.ssn}
-          onChange={handleInputChange}
-          className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
-        />
+        <div>
+          <label className="block text-sm font-semibold text-gray-900 mb-2">
+            Legally Authorized to Work in US? *
+          </label>
+          <select
+            name="workAuthorized"
+            value={formData.workAuthorized}
+            onChange={handleInputChange}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
+          >
+            <option value="">Select Option</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+        <div>
+          <label className="block text-sm font-semibold text-gray-900 mb-2">
+            Full SSN (XXX-XX-XXXX) *
+          </label>
+          <input
+            type="password"
+            name="ssn"
+            placeholder="Enter SSN"
+            value={formData.ssn}
+            onChange={handleInputChange}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
+          />
+        </div>
       </div>
 
       <div className="space-y-4">
@@ -151,34 +215,48 @@ export const PersonalInfoSection = ({
           Government ID Information *
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <select
-            name="idType"
-            value={formData.idType}
-            onChange={handleInputChange}
-            className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
-          >
-            <option value="">ID Type</option>
-            <option value="drivers-license">Driver's License</option>
-            <option value="state-id">State ID</option>
-            <option value="passport">Passport</option>
-            <option value="other">Other</option>
-          </select>
-          <input
-            type="text"
-            name="idNumber"
-            placeholder="ID Number"
-            value={formData.idNumber}
-            onChange={handleInputChange}
-            className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
-          />
-          <input
-            type="text"
-            name="idExpiration"
-            placeholder="Expiration (MM/DD/YYYY)"
-            value={formData.idExpiration}
-            onChange={handleInputChange}
-            className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
-          />
+          <div>
+            <label className="block text-sm font-semibold text-gray-900 mb-2">
+              ID Type *
+            </label>
+            <select
+              name="idType"
+              value={formData.idType}
+              onChange={handleInputChange}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
+            >
+              <option value="">Select ID Type</option>
+              <option value="drivers-license">Driver's License</option>
+              <option value="state-id">State ID</option>
+              <option value="passport">Passport</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-gray-900 mb-2">
+              ID Number *
+            </label>
+            <input
+              type="text"
+              name="idNumber"
+              placeholder="Enter ID Number"
+              value={formData.idNumber}
+              onChange={handleInputChange}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-gray-900 mb-2">
+              ID Expiration Date *
+            </label>
+            <input
+              type="date"
+              name="idExpiration"
+              value={formData.idExpiration}
+              onChange={handleInputChange}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
+            />
+          </div>
         </div>
       </div>
 
@@ -186,7 +264,6 @@ export const PersonalInfoSection = ({
         <p className="font-semibold text-gray-900 text-sm md:text-base">
           Upload ID Documents *
         </p>
-
         <FileUploadZone
           label="ID Front"
           fileName={formData.idFront}
@@ -198,7 +275,6 @@ export const PersonalInfoSection = ({
           onFileInput={(e) => handleFileInput(e, "idFront")}
           inputId="idFront"
         />
-
         <FileUploadZone
           label="ID Back"
           fileName={formData.idBack}

@@ -13,13 +13,13 @@ export const DocumentsSection = ({
     <div className="space-y-6 md:space-y-8">
       <div>
         <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-          Section 5: Documents & Consent
+          Section 3: Documents & Consent
         </h2>
         <div className="w-16 h-1 bg-emerald-600 rounded"></div>
       </div>
 
       <div>
-        <label className="block text-xs md:text-sm font-semibold text-gray-900 mb-3">
+        <label className="block text-sm font-semibold text-gray-900 mb-3">
           Resume / CV *
         </label>
         <FileUploadZone

@@ -6,7 +6,7 @@ export const ReviewSignSection = ({ formData, handleInputChange }) => {
     <div className="space-y-6 md:space-y-8">
       <div>
         <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-          Section 6: Review & Sign
+          Section 4: Review & Sign
         </h2>
         <div className="w-16 h-1 bg-emerald-600 rounded"></div>
       </div>
@@ -20,7 +20,7 @@ export const ReviewSignSection = ({ formData, handleInputChange }) => {
 
       <div className="space-y-4">
         <div>
-          <label className="block text-xs md:text-sm font-semibold text-gray-900 mb-2">
+          <label className="block text-sm font-semibold text-gray-900 mb-2">
             Applicant Signature *
           </label>
           <input
@@ -34,7 +34,7 @@ export const ReviewSignSection = ({ formData, handleInputChange }) => {
         </div>
 
         <div>
-          <label className="block text-xs md:text-sm font-semibold text-gray-900 mb-2">
+          <label className="block text-sm font-semibold text-gray-900 mb-2">
             Date *
           </label>
           <input
