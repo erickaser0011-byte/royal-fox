@@ -8,7 +8,7 @@ export const Header = ({ currentStep, totalSteps }) => {
           <div className="flex items-center gap-2 md:gap-3">
             <img
               className="w-10 md:w-12 h-10 md:h-12 rounded-lg flex items-center justify-center"
-              src="src/assets/IMG_1619.JPG"
+              src="/IMG_1619.JPG"
               alt="rf logo"
             />
 
