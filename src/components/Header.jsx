@@ -6,11 +6,12 @@ export const Header = ({ currentStep, totalSteps }) => {
       <div className="max-w-6xl mx-auto px-4 md:px-8 py-4 md:py-6">
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-2 md:gap-3">
-            <div className="w-10 md:w-12 h-10 md:h-12 bg-gradient-to-br from-emerald-600 to-teal-700 rounded-lg flex items-center justify-center shadow-lg flex-shrink-0">
-              <span className="text-white font-bold text-lg md:text-xl">
-                RF
-              </span>
-            </div>
+            <img
+              className="w-10 md:w-12 h-10 md:h-12 rounded-lg flex items-center justify-center"
+              src="src/assets/IMG_1619.JPG"
+              alt="rf logo"
+            />
+
             <div className="min-w-0">
               <h1 className="text-lg md:text-2xl font-bold text-gray-900 truncate">
                 Royal Fox Production

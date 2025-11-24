@@ -63,13 +63,15 @@ export const PositionDetailsSection = ({ formData, handleInputChange }) => {
           <label className="block text-sm font-semibold text-gray-900 mb-2">
             Start Date *
           </label>
-          <input
-            type="date"
-            name="startDate"
-            value={formData.startDate}
-            onChange={handleInputChange}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
-          />
+          <div className="w-full max-w-xs">
+            <input
+              type="date"
+              name="startDate"
+              value={formData.startDate}
+              onChange={handleInputChange}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none transition text-sm md:text-base"
+            />
+          </div>
         </div>
       </div>
 

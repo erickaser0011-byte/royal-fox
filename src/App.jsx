@@ -140,6 +140,7 @@ export default function App() {
     }
   };
 
+
   // --- Store the File object, not the filename string ---
   const handleDrop = (e, fileType) => {
     e.preventDefault();
